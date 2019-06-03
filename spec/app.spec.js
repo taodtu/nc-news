@@ -70,6 +70,28 @@ describe('/', () => {
           });
       });
     });
+    describe('/articles/:article_id', () => {
+      it('GET status:200, and return the article with updated votes', () => {
+        return request(app)
+          .patch('/api/articles/1')
+          .send({ inc_votes: -7 })
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.article).to.be.an('object');
+            expect(body.article).to.eql(
+              {
+                article_id: 1,
+                title: 'Living in the shadow of a great man',
+                topic: 'mitch',
+                author: 'butter_bridge',
+                body: 'I find this existence challenging',
+                created_at: "2018-11-15T12:21:54.171Z",
+                votes: 93,
+              }
+            );
+          });
+      });
+    });
     describe('/topics', () => {
       it('GET status:200 and return all the articles with all the keys', () => {
         return request(app)
