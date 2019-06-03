@@ -7,9 +7,8 @@ const app = require('../app');
 const connection = require('../db/connection');
 
 describe('/', () => {
-  // beforeEach(() => connection.seed.run());
+  beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
-
   describe('/api', () => {
     it('GET status:200', () => {
       return request(app)
@@ -18,6 +17,16 @@ describe('/', () => {
         .then(({ body }) => {
           expect(body.ok).to.equal(true);
         });
+    });
+    describe('/topics', () => {
+      it('GET status:200', () => {
+        return request(app)
+          .get('/api/topics')
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.ok).to.equal(true);
+          });
+      });
     });
   });
 });

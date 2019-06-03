@@ -2,13 +2,10 @@ const { topicData, userData, articleData, commentData } = require('../data');
 const { format } = require('../../utils/format')
 
 exports.seed = async (knex, Promise) => {
-  await knex.migrate
-    .rollback()
-    .then(() => knex.migrate.latest());
-  await knex('topics')
-    .insert(topicData)
-  await knex('users')
-    .insert(userData)
+  await knex.migrate.rollback()
+  await knex.migrate.latest();
+  await knex('topics').insert(topicData)
+  await knex('users').insert(userData)
   const articles = await knex('articles')
     .insert(articleData)
     .returning('*');
