@@ -4,8 +4,7 @@ const { format } = require('../../utils/format')
 exports.seed = async (knex, Promise) => {
   await knex.migrate.rollback()
   await knex.migrate.latest();
-  await knex('topics').insert(topicData)
-  await knex('users').insert(userData)
+  await Promise.all([knex('topics').insert(topicData), knex('users').insert(userData)]);
   const articles = await knex('articles')
     .insert(articleData)
     .returning('*');
