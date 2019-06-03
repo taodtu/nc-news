@@ -1,4 +1,5 @@
 // const {  } = require('../data');
+const { format } = require('../../utils/format')
 
 exports.seed = (knex, Promise) => {
   return knex.migrate
