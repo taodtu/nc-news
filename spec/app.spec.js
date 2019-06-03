@@ -24,7 +24,11 @@ describe('/', () => {
           .get('/api/topics')
           .expect(200)
           .then(({ body }) => {
-            expect(body.ok).to.equal(true);
+            expect(body.topics).to.be.an('array');
+            expect(body.topics[0]).to.contain.keys(
+              'slug',
+              'description'
+            );
           });
       });
     });
