@@ -16,7 +16,6 @@ exports.seed = async (knex, Promise) => {
     const { created_by, ...rest } = comment;
     return { ...rest, author: created_by };
   })
-  console.log(commentWithAuthor)
   const formattedComment = format(articles, commentWithAuthor, "title", "article_id", "belongs_to")
   await knex('comments')
     .insert(formattedComment)
