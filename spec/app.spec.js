@@ -116,7 +116,7 @@ describe('/', () => {
       });
     });
     describe('/articles/:article_id/comments', () => {
-      it('GET status:200, and return the article by article_id', () => {
+      it('GET status:200, and return an array of comments belongs to this article with proper keys', () => {
         return request(app)
           .get('/api/articles/1')
           .expect(200)
