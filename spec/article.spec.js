@@ -170,7 +170,7 @@ describe('/articles', () => {
           );
         });
     });
-    it.only('GET status:200, and return an array of comments with order', () => {
+    it('GET status:200, and return an array of comments with order', () => {
       return request(app)
         .get('/api/articles/1/comments?sort_by=votes&order=asc')
         .expect(200)
