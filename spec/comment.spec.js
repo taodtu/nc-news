@@ -4,7 +4,8 @@ const { expect } = require('chai');
 const request = require('supertest');
 
 const app = require('../app');
-const connection = require('../db/connection');
+const dbConfig = require('../knexfile');
+const connection = require('knex')(dbConfig);
 
 describe('/comments', () => {
   beforeEach(() => connection.seed.run());

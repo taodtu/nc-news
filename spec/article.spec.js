@@ -4,7 +4,8 @@ const { expect } = require('chai');
 const request = require('supertest');
 
 const app = require('../app');
-const connection = require('../db/connection');
+const dbConfig = require('../knexfile');
+const connection = require('knex')(dbConfig);
 
 describe('/articles', () => {
   beforeEach(() => connection.seed.run());
@@ -37,7 +38,7 @@ describe('/articles', () => {
           expect(body.msg).to.equal('Bad Request');
         });
     });
-    it('GET for an invalid username - status:404 and error message', () => {
+    it('GET for an invalid article_id - status:404 and error message', () => {
       return request(app)
         .get('/api/articles/1123')
         .expect(404)
@@ -97,10 +98,22 @@ describe('/articles', () => {
     it('PATCH for an invalid body value - status:400 and error message', () => {
       return request(app)
         .patch('/api/articles/1')
-        .send({ inc_votes: 'porn' })
+        .send({ inc_votes: 'star' })
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('PATCH for a body with many keys - status:400 and error message', () => {
+      return request(app)
+        .patch('/api/articles/1')
+        .send({
+          inc_votes: 'star',
+          name: 'Mitch'
+        })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Votes Only');
         });
     });
   });
