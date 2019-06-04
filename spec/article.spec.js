@@ -170,18 +170,21 @@ describe('/articles', () => {
           );
         });
     });
-    it('GET status:200, and return an array of comments with order', () => {
+    it.only('GET status:200, and return an array of comments with order', () => {
       return request(app)
         .get('/api/articles/1/comments?sort_by=votes&order=asc')
         .expect(200)
         .then(({ body }) => {
           expect(body.comments).to.be.an('array');
-          expect(body.comments[0]).to.contain.keys(
-            'article_id',
-            'author',
-            'body',
-            'created_at',
-            'votes',
+          expect(body.comments[0]).to.eql(
+            {
+              comment_id: 4,
+              author: 'icellusedkars',
+              article_id: 1,
+              body: ' I carry a log — yes. Is it funny to you? It is not to me.',
+              votes: -100,
+              created_at: '2014-11-23T12:36:03.389Z'
+            }
           );
         });
     });
