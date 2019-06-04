@@ -9,7 +9,7 @@ const connection = require('../db/connection');
 describe('/articles', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
-  describe.only('/articles/:article_id', () => {
+  describe('/articles/:article_id', () => {
     it('GET status:200, and return the article by article_id', () => {
       return request(app)
         .get('/api/articles/1')
@@ -67,6 +67,42 @@ describe('/articles', () => {
           );
         });
     });
+    it('PATCH for an invalid article_id - status:400 and error message', () => {
+      return request(app)
+        .patch('/api/articles/porn')
+        .send({ article_id: 'porn' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('PATCH for an non-exsting article_id - status:404 and error message', () => {
+      return request(app)
+        .patch('/api/articles/1123')
+        .send({ article_id: 1123 })
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Article Not Found');
+        });
+    });
+    it('PATCH for an invalid body key - status:400 and error message', () => {
+      return request(app)
+        .patch('/api/articles/1')
+        .send({ article_id: 'porn' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Wrong Update Input');
+        });
+    });
+    it('PATCH for an invalid body value - status:400 and error message', () => {
+      return request(app)
+        .patch('/api/articles/1')
+        .send({ inc_votes: 'porn' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
   });
   describe('/articles/:article_id/comments', () => {
     it('POST status:200, and return the comment with proper keys', () => {
@@ -88,6 +124,33 @@ describe('/articles', () => {
               body: 'I want to become a pornstar'
             }
           );
+        });
+    });
+    it('POST for an invalid article_id - status:400 and error message', () => {
+      return request(app)
+        .post('/api/articles/porn/comments')
+        .send({ article_id: 'porn' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('POST for a non-exist article_id - status:400 and error message', () => {
+      return request(app)
+        .post('/api/articles/1123/comments')
+        .send({ article_id: 1123 })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('POST for an invalid body key - status:400 and error message', () => {
+      return request(app)
+        .post('/api/articles/1/comments')
+        .send({ article_id: 'porn' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Wrong Update Input');
         });
     });
   });
