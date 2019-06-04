@@ -6,6 +6,9 @@ const request = require('supertest');
 const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
+const chai = require("chai");
+const chaiSorted = require("chai-sorted");
+chai.use(chaiSorted);
 
 describe('/articles', () => {
   beforeEach(() => connection.seed.run());
@@ -63,42 +66,56 @@ describe('/articles', () => {
           );
         });
     });
-    it('GET status:200, and return an array of comments with order', () => {
+    it('GET for an invalid article_id - status:400 and error message', () => {
       return request(app)
-        .get('/api/articles/1/comments?sort_by=votes&order=asc')
-        .expect(200)
+        .get('/api/articles/star/comments')
+        .expect(400)
         .then(({ body }) => {
-          expect(body.comments).to.be.an('array');
-          expect(body.comments[0]).to.eql(
-            {
-              comment_id: 4,
-              author: 'icellusedkars',
-              article_id: 1,
-              body: ' I carry a log — yes. Is it funny to you? It is not to me.',
-              votes: -100,
-              created_at: '2014-11-23T12:36:03.389Z'
-            }
-          );
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('GET for a non-exsiting valid article_id - status:404 and error message', () => {
+      return request(app)
+        .get('/api/articles/1123/comments')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Comments Not Found');
         });
     });
   });
-  describe('/articles', () => {
-    it('GET status:200 and return all the articles with all the keys', () => {
-      return request(app)
-        .get('/api/articles')
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles[0]).to.contain.keys(
-            'author',
-            'title',
-            'article_id',
-            'topic',
-            'created_at',
-            'votes',
-            'comment_count'
-          );
-        });
-    });
+  it('GET status:200, and return an array of comments with default order', () => {
+    return request(app)
+      .get('/api/articles/1/comments')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).to.be.an('array');
+        expect(body.comments).to.be.descendingBy("created_at")
+      });
+  });
+  it('GET status:200, and return an array of comments with input order', () => {
+    return request(app)
+      .get('/api/articles/1/comments?sort_by=votes&order=asc')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).to.be.an('array');
+        expect(body.comments).to.be.ascendingBy("votes")
+      });
+  });
+  it("GET for sort_by a column that doesn't exist - status:400 and error message", () => {
+    return request(app)
+      .get('/api/articles/1/comments?sort_by=slug&order=asc')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.equal('Bad Request');
+      });
+  });
+  it("GET for order doesn't exist - status:400 and error message", () => {
+    return request(app)
+      .get('/api/articles/1/comments?sort_by=votes&order=xasc')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.equal('Wrong Order Query');
+      });
   });
 });
+
