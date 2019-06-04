@@ -9,7 +9,7 @@ const connection = require('../db/connection');
 describe('/articles', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
-  describe('/articles/:article_id', () => {
+  describe.only('/articles/:article_id', () => {
     it('GET status:200, and return the article by article_id', () => {
       return request(app)
         .get('/api/articles/1')
@@ -27,6 +27,22 @@ describe('/articles', () => {
               votes: 100,
             }
           );
+        });
+    });
+    it('GET for an invalid article_id - status:400 and error message', () => {
+      return request(app)
+        .get('/api/articles/porn')
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('GET for an invalid username - status:404 and error message', () => {
+      return request(app)
+        .get('/api/articles/1123')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Article Not Found');
         });
     });
   });
