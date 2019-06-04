@@ -6,7 +6,7 @@ const request = require('supertest');
 const app = require('../app');
 const connection = require('../db/connection');
 
-describe.only('/users/:username', () => {
+describe('/users/:username', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   it('GET status:200, and return the user by username', () => {
@@ -24,12 +24,21 @@ describe.only('/users/:username', () => {
         );
       });
   });
-  it.only('GET for an invalid username - status:404 and error message', () => {
+  it('GET for an invalid username - status:404 and error message', () => {
     return request(app)
       .get('/api/users/23')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).to.equal('Invalid user ID');
+        expect(body.msg).to.equal('User Not Found');
+      });
+  });
+  it('POST for a new user - status:405 and Method Not Allowed', () => {
+    return request(app)
+      .post('/api/users/pornstar')
+      .send({ username: 'pornstar' })
+      .expect(405)
+      .then(({ body }) => {
+        expect(body.msg).to.equal('Method Not Allowed');
       });
   });
 });

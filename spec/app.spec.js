@@ -18,5 +18,13 @@ describe('/', () => {
           expect(body.ok).to.equal(true);
         });
     });
+    it('GET status:404 for a route not found', () => {
+      return request(app)
+        .get('/api/house')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Route Not Found');
+        });
+    });
   });
 });
