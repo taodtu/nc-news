@@ -118,20 +118,16 @@ describe('/', () => {
     describe('/articles/:article_id/comments', () => {
       it('GET status:200, and return an array of comments belongs to this article with proper keys', () => {
         return request(app)
-          .get('/api/articles/1')
+          .get('/api/articles/1/comments')
           .expect(200)
           .then(({ body }) => {
-            expect(body.article).to.be.an('object');
-            expect(body.article).to.eql(
-              {
-                article_id: 1,
-                title: 'Living in the shadow of a great man',
-                topic: 'mitch',
-                author: 'butter_bridge',
-                body: 'I find this existence challenging',
-                created_at: "2018-11-15T12:21:54.171Z",
-                votes: 100,
-              }
+            expect(body.comments).to.be.an('array');
+            expect(body.comments[0]).to.contain.keys(
+              'article_id',
+              'author',
+              'body',
+              'created_at',
+              'votes',
             );
           });
       });
