@@ -26,8 +26,8 @@ exports.testArticlePatch = () => {
   });
   it('PATCH for an invalid article_id - status:400 and error message', () => {
    return request(app)
-    .patch('/api/articles/porn')
-    .send({ article_id: 'porn' })
+    .patch('/api/articles/star')
+    .send({ inc_votes: -7 })
     .expect(400)
     .then(({ body }) => {
      expect(body.msg).to.equal('Bad Request');
@@ -36,7 +36,7 @@ exports.testArticlePatch = () => {
   it('PATCH for an non-exsting article_id - status:404 and error message', () => {
    return request(app)
     .patch('/api/articles/1123')
-    .send({ article_id: 1123 })
+    .send({ inc_votes: -7 })
     .expect(404)
     .then(({ body }) => {
      expect(body.msg).to.equal('Article Not Found');
@@ -45,7 +45,7 @@ exports.testArticlePatch = () => {
   it('PATCH for an invalid body key - status:400 and error message', () => {
    return request(app)
     .patch('/api/articles/1')
-    .send({ article_id: 'porn' })
+    .send({ article_id: 'star' })
     .expect(400)
     .then(({ body }) => {
      expect(body.msg).to.equal('Wrong Update Input');
@@ -57,7 +57,7 @@ exports.testArticlePatch = () => {
     .send({ inc_votes: 'star' })
     .expect(400)
     .then(({ body }) => {
-     expect(body.msg).to.equal('Bad Request');
+     expect(body.msg).to.equal('Wrong Update Input');
     });
   });
   it('PATCH for a body with many keys - status:400 and error message', () => {
