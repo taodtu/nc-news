@@ -22,4 +22,20 @@ describe('/topics', () => {
         );
       });
   });
+  it('GET status:404 for a route not found', () => {
+    return request(app)
+      .get('/api/topics/star')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.equal('Route Not Found');
+      });
+  });
+  it('Delete all topics - status:405 and Method Not Allowed', () => {
+    return request(app)
+      .post('/api/topics')
+      .expect(405)
+      .then(({ body }) => {
+        expect(body.msg).to.equal('Method Not Allowed');
+      });
+  });
 });
