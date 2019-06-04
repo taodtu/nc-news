@@ -33,8 +33,8 @@ describe('/comments', () => {
     });
     it('PATCH for an invalid comment_id - status:400 and error message', () => {
       return request(app)
-        .patch('/api/comments/porn')
-        .send({ article_id: 'porn' })
+        .patch('/api/comments/star')
+        .send({ inc_votes: 7 })
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal('Bad Request');
@@ -43,7 +43,7 @@ describe('/comments', () => {
     it('PATCH for an non-exsting comments_id - status:404 and error message', () => {
       return request(app)
         .patch('/api/comments/1123')
-        .send({ article_id: 1123 })
+        .send({ inc_votes: 7 })
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.equal('Comment Not Found');
@@ -52,7 +52,7 @@ describe('/comments', () => {
     it('PATCH for an invalid body key - status:400 and error message', () => {
       return request(app)
         .patch('/api/comments/1')
-        .send({ article_id: 'porn' })
+        .send({ article_id: 'star' })
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal('Wrong Update Input');
@@ -61,10 +61,19 @@ describe('/comments', () => {
     it('PATCH for an invalid body value - status:400 and error message', () => {
       return request(app)
         .patch('/api/comments/1')
-        .send({ inc_votes: 'porn' })
+        .send({ inc_votes: 'star' })
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Bad Request');
+          expect(body.msg).to.equal('Wrong Update Input');
+        });
+    });
+    it('post a new vote - status:405 and Method Not Allowed', () => {
+      return request(app)
+        .post('/api/comments/1')
+        .send({ inc_votes: 2 })
+        .expect(405)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Method Not Allowed');
         });
     });
     it('Delete status:200, and return the delete message', () => {
@@ -77,7 +86,15 @@ describe('/comments', () => {
     });
     it('Delete for an invalid comment_id - status:400 and error message', () => {
       return request(app)
-        .delete('/api/comments/porn')
+        .delete('/api/comments/star')
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Bad Request');
+        });
+    });
+    it('Delete for non-exsiting valid comment_id - status:400 and error message', () => {
+      return request(app)
+        .delete('/api/comments/9999')
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal('Bad Request');

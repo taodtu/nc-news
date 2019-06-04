@@ -32,7 +32,7 @@ describe('/topics', () => {
   });
   it('Delete all topics - status:405 and Method Not Allowed', () => {
     return request(app)
-      .post('/api/topics')
+      .delete('/api/topics')
       .expect(405)
       .then(({ body }) => {
         expect(body.msg).to.equal('Method Not Allowed');

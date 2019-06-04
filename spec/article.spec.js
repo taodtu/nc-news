@@ -32,13 +32,13 @@ describe('/articles', () => {
     });
     it('GET for an invalid article_id - status:400 and error message', () => {
       return request(app)
-        .get('/api/articles/porn')
+        .get('/api/articles/star')
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).to.equal('Bad Request');
         });
     });
-    it('GET for an invalid article_id - status:404 and error message', () => {
+    it('GET for a non-exsiting valid article_id - status:404 and error message', () => {
       return request(app)
         .get('/api/articles/1123')
         .expect(404)

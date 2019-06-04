@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../app');
 
 exports.testArticlesPost = () => {
-  describe.only('/articles/:article_id/comments', () => {
+  describe('/articles/:article_id/comments', () => {
     it('POST status:201, and return the comment with proper keys', () => {
       return request(app)
         .post('/api/articles/1/comments')
