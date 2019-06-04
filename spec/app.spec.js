@@ -7,7 +7,8 @@ const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
 const { testArticlePatch } = require('./articles-patch.spec');
-const { testArticlesPost } = require('./articles-post.spec')
+const { testArticlesPost } = require('./articles-post.spec');
+const { testArticlesGet } = require('./articles-get.spec')
 
 describe('/', () => {
   beforeEach(() => connection.seed.run());
@@ -32,4 +33,5 @@ describe('/', () => {
   });
   testArticlePatch();
   testArticlesPost();
+  testArticlesGet();
 });
