@@ -29,7 +29,6 @@ describe.only('/users/:username', () => {
       .get('/api/users/23')
       .expect(404)
       .then(({ body }) => {
-        console.log(body)
         expect(body.msg).to.equal('Invalid user ID');
       });
   });
