@@ -7,7 +7,7 @@ const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
 
-describe('/comments', () => {
+describe.only('/comments', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   describe('/comments/:comment_id', () => {
@@ -89,7 +89,7 @@ describe('/comments', () => {
         .delete('/api/comments/star')
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Invalid ID');
+          expect(body.msg).to.equal('Bad Request');
         });
     });
     it('Delete for non-exsiting valid comment_id - status:400 and error message', () => {

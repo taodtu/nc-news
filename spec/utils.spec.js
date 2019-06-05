@@ -33,7 +33,6 @@ describe("format", () => {
   const actual = format(articles, comments, "title", "article_id", "belongs_to");
   expect(actual[0]).to.contain.keys("body", "article_id", "votes", "created_at", 'created_by');
   expect(actual[0]).to.not.equal(comments);
-  console.log(actual[0])
   expect(actual[0].article_id).to.equal(3);
  });
 });
