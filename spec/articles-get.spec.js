@@ -6,7 +6,7 @@ const chaiSorted = require("chai-sorted");
 chai.use(chaiSorted);
 
 exports.testArticlesGet = () => {
-  describe('/articles', () => {
+  describe.only('/articles', () => {
     it('GET status:200 and return all the articles with all the keys', () => {
       return request(app)
         .get('/api/articles')
