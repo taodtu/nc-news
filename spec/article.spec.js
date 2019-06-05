@@ -52,7 +52,7 @@ describe('/articles', () => {
     });
   });
   describe('/articles/:article_id/comments', () => {
-    it.only('GET status:200, and return an array of comments belongs to this article with proper keys', () => {
+    it('GET status:200, and return an array of comments belongs to this article with proper keys', () => {
       return request(app)
         .get('/api/articles/1/comments')
         .expect(200)
@@ -68,6 +68,15 @@ describe('/articles', () => {
           );
         });
     });
+    it('GET return 200: OK when the article exists with no comments', () => {
+      return request(app)
+        .get('/api/articles/2/comments')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments).to.be.an('array');
+          expect(body.comments).to.eql([]);
+        });
+    });
     it('GET for an invalid article_id - status:400 and error message', () => {
       return request(app)
         .get('/api/articles/star/comments')
@@ -81,7 +90,7 @@ describe('/articles', () => {
         .get('/api/articles/1123/comments')
         .expect(404)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Comments Not Found');
+          expect(body.msg).to.equal('Not Found');
         });
     });
   });
