@@ -4,6 +4,7 @@ const { format } = require("../utils/format");
 describe("format", () => {
  const articles = [
   {
+   article_id: 3,
    title: 'Living in the shadow of a great man',
    topic: 'mitch',
    author: 'butter_bridge',
@@ -14,48 +15,25 @@ describe("format", () => {
  const comments = [{
   body:
    "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-  belongs_to: "They're not exactly dogs, are they?",
+  belongs_to: 'Living in the shadow of a great man',
   created_by: 'butter_bridge',
   votes: 16,
   created_at: 1511354163389,
  }]
- it("returns an new empty array when passed an empty array of films", () => {
-  const shops = [];
-  const ref = {};
-  const actual = formatshop(ref, shops);
+ it("returns an new empty array when passed  empty arrays", () => {
+  const arr1 = [];
+  const arr2 = [];
+  const actual = format(arr1, arr2);
   const expected = [];
   expect(actual).to.eql(expected);
-  expect(actual).to.not.equal(shops);
+  expect(actual).to.not.equal(arr1)
+  expect(actual).to.not.equal(arr2);
  });
- it("return and contains all correct keys", () => {
-  let shops = [
-   {
-    shop_name: "Goodwin - McClure",
-    owner: "Derek",
-    slogan: "Organic directional matrix"
-   }
-  ];
-  const ref = {};
-  const actual = formatshop(ref, shops);
-  expect(shops[0]).to.contain.keys("shop_name", "owner", "slogan");
-  expect(actual[0]).to.not.equal(shops);
- });
- it("each shop should take a ref as well a return a new shop with owner_id", () => {
-  const shopData = [
-   {
-    shop_name: "Goodwin - McClure",
-    owner: "Derek",
-    slogan: "Organic directional matrix"
-   }
-  ];
-  const ref = { Derek: 1 };
-  const actual = formatshop(ref, shopData);
-  const expected = {
-   shop_name: "Goodwin - McClure",
-   owner_id: 1,
-   slogan: "Organic directional matrix"
-  };
-  expect(actual[0]).to.eql(expected);
-  expect(actual[0]).to.not.equal(shopData);
+ it("return and contains all correct keys and article_id correlate to articles", () => {
+  const actual = format(articles, comments, "title", "article_id", "belongs_to");
+  expect(actual[0]).to.contain.keys("body", "article_id", "votes", "created_at", 'created_by');
+  expect(actual[0]).to.not.equal(comments);
+  console.log(actual[0])
+  expect(actual[0].article_id).to.equal(3);
  });
 });
