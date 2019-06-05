@@ -14,8 +14,9 @@ exports.handleCustomErrors = (err, req, res, next) => {
   else next(err);
 };
 exports.handlePsqlErrors = (err, req, res, next) => {
-  const psqlBadRequestCodes = ['22P02', '23503', '42703'];
+  const psqlBadRequestCodes = ['22P02', '42703'];
   if (psqlBadRequestCodes.includes(err.code))
     res.status(400).send({ msg: err.msg || 'Bad Request' });
+  else if (err.code === '23503') { res.status(404).send({ msg: 'Not Found' }); }
   else next(err);
 };

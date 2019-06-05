@@ -44,9 +44,9 @@ exports.testArticlesPost = () => {
           username: 'butter_bridge',
           body: 'I want to become a star'
         })
-        .expect(400)
+        .expect(404)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Bad Request');
+          expect(body.msg).to.equal('Not Found');
         });
     });
     it('POST for an invalid body key - status:400 and error message', () => {
