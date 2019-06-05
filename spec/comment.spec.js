@@ -89,7 +89,7 @@ describe('/comments', () => {
         .delete('/api/comments/star')
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Bad Request');
+          expect(body.msg).to.equal('Invalid ID');
         });
     });
     it('Delete for non-exsiting valid comment_id - status:400 and error message', () => {
@@ -97,7 +97,7 @@ describe('/comments', () => {
         .delete('/api/comments/9999')
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Bad Request');
+          expect(body.msg).to.equal('Invalid ID');
         });
     });
   });
