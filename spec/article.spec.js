@@ -14,7 +14,7 @@ describe('/articles', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   describe('/articles/:article_id', () => {
-    it('GET status:200, and return the article by article_id', () => {
+    it.only('GET status:200, and return the article by article_id', () => {
       return request(app)
         .get('/api/articles/1')
         .expect(200)
@@ -29,6 +29,7 @@ describe('/articles', () => {
               body: 'I find this existence challenging',
               created_at: "2018-11-15T12:21:54.171Z",
               votes: 100,
+              comment_count: 13
             }
           );
         });

@@ -5,6 +5,7 @@ exports.sendArticleByID = async (req, res, next) => {
   if (!article) await Promise.reject({ status: 404, msg: 'Article Not Found' })
   res.status(200).send({ article });
  } catch (err) {
+  console.log(err)
   next(err)
  }
 }
