@@ -3,7 +3,7 @@ const request = require('supertest');
 const app = require('../app');
 
 exports.testArticlePatch = () => {
-  describe.only('/articles/:article_id', () => {
+  describe('/articles/:article_id', () => {
     it('Patch status:200, and return the article with updated votes', () => {
       return request(app)
         .patch('/api/articles/1')
