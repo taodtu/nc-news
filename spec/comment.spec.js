@@ -96,13 +96,10 @@ describe.only('/comments', () => {
           expect(body.msg).to.equal('Method Not Allowed');
         });
     });
-    it('Delete status:200, and return the delete message', () => {
+    it('Delete status:204, and return nothing', () => {
       return request(app)
         .delete('/api/comments/1')
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.msg).to.equal('comment 1 deleted :(');
-        });
+        .expect(204)
     });
     it('Delete for an invalid comment_id - status:400 and error message', () => {
       return request(app)
