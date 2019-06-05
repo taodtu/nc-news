@@ -7,7 +7,7 @@ const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
 
-describe.only('/comments', () => {
+describe('/comments', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   describe('/comments/:comment_id', () => {
@@ -109,12 +109,12 @@ describe.only('/comments', () => {
           expect(body.msg).to.equal('Bad Request');
         });
     });
-    it('Delete for non-exsiting valid comment_id - status:400 and error message', () => {
+    it('Delete for non-exsiting valid comment_id - status:404 and error message', () => {
       return request(app)
         .delete('/api/comments/9999')
-        .expect(400)
+        .expect(404)
         .then(({ body }) => {
-          expect(body.msg).to.equal('Invalid ID');
+          expect(body.msg).to.equal('Not Found');
         });
     });
   });

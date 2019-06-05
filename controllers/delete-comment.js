@@ -4,7 +4,7 @@ exports.deleteCommentByID = async (req, res, next) => {
     const deleteCount = await deleteComment(req.params);
     deleteCount ?
       res.sendStatus(204)
-      : await Promise.reject({ status: 400, msg: 'Invalid ID' })
+      : await Promise.reject({ status: 404, msg: 'Not Found' })
   } catch (err) {
     next(err)
   }
