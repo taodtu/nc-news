@@ -7,7 +7,7 @@ const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
 
-describe.only('/comments', () => {
+describe('/comments', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   describe('/comments/:comment_id', () => {

@@ -74,5 +74,81 @@ exports.testArticlesGet = () => {
           expect(body.msg).to.equal('Wrong Order Query');
         });
     });
+    it('GET status:200 and return all the articles belongs to a author', () => {
+      return request(app)
+        .get('/api/articles?author=butter_bridge')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.an('array');
+          expect(body.articles).to.eql(
+            [{
+              article_id: 1,
+              title: 'Living in the shadow of a great man',
+              body: 'I find this existence challenging',
+              votes: 100,
+              topic: 'mitch',
+              author: 'butter_bridge',
+              created_at: '2018-11-15T12:21:54.171Z',
+              comment_count: 13
+            },
+            {
+              article_id: 9,
+              title: "They're not exactly dogs, are they?",
+              body: 'Well? Think about it.',
+              votes: 0,
+              topic: 'mitch',
+              author: 'butter_bridge',
+              created_at: '1986-11-23T12:21:54.171Z',
+              comment_count: 2
+            },
+            {
+              article_id: 12,
+              title: 'Moustache',
+              body: 'Have you seen the size of that thing?',
+              votes: 0,
+              topic: 'mitch',
+              author: 'butter_bridge',
+              created_at: '1974-11-26T12:21:54.171Z',
+              comment_count: 0
+            }]
+          );
+        });
+    });
+    it('GET status:200 and return all the articles belongs to a author and a topic', () => {
+      return request(app)
+        .get('/api/articles?topic=cats')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.an('array');
+          expect(body.articles).to.eql(
+            [{
+              article_id: 5,
+              title: 'UNCOVERED: catspiracy to bring down democracy',
+              body: 'Bastet walks amongst us, and the cats are taking arms!',
+              votes: 0,
+              topic: 'cats',
+              author: 'rogersop',
+              created_at: '2002-11-19T12:21:54.171Z',
+              comment_count: 2
+            }]
+          );
+        });
+    });
+    it('GET status:404 when request an author not in the databse', () => {
+      return request(app)
+        .get('/api/articles?author=cats')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Not Found');
+        });
+    });
+    it('GET status:404 when request an topic not in the databse', () => {
+      return request(app)
+        .get('/api/articles?topic=tao')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.equal('Not Found');
+        });
+    });
   });
 }
