@@ -21,6 +21,21 @@ exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc', author,
   }));
 }
 
+exports.checkExist = async (member, tables, key) => {
+ if (!member) return true
+
+ else {
+  const memberDB = await connection
+   .select('*')
+   .from(tables)
+   .where({ [key]: member })
+   .returning('*')
+
+  return memberDB[0] ? true : Promise.reject({ status: 404, msg: 'Not Found' })
+ }
+}
+
+
 // exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc' }) => {
 //  if (!['asc', 'desc'].includes(order)) return await Promise.reject({ status: 400, msg: 'Wrong Order Query' })
 

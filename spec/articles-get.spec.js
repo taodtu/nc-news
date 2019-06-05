@@ -136,7 +136,7 @@ exports.testArticlesGet = () => {
     });
     it('GET status:404 when request an author not in the databse', () => {
       return request(app)
-        .get('/api/articles?author=cats')
+        .get('/api/articles?author=cats&topic=mitch')
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.equal('Not Found');
@@ -144,10 +144,18 @@ exports.testArticlesGet = () => {
     });
     it('GET status:404 when request an topic not in the databse', () => {
       return request(app)
-        .get('/api/articles?topic=tao')
+        .get('/api/articles?author=cats&topic=tao')
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.equal('Not Found');
+        });
+    });
+    it('GET status:200 when request an author in DB with no articles', () => {
+      return request(app)
+        .get('/api/articles?author=lurker')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.eql([]);
         });
     });
   });
