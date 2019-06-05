@@ -7,7 +7,7 @@ const app = require('../app');
 const dbConfig = require('../knexfile');
 const connection = require('knex')(dbConfig);
 
-describe('/comments', () => {
+describe.only('/comments', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
   describe('/comments/:comment_id', () => {
@@ -26,6 +26,26 @@ describe('/comments', () => {
                 "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
               author: 'butter_bridge',
               votes: 23,
+              created_at: "2017-11-22T12:36:03.389Z",
+            }
+          );
+        });
+    });
+    it('Patch status:200, and return the comment when send nothing', () => {
+      return request(app)
+        .patch('/api/comments/1')
+        .send()
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comment).to.be.an('object');
+          expect(body.comment).to.eql(
+            {
+              article_id: 9,
+              comment_id: 1,
+              body:
+                "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              author: 'butter_bridge',
+              votes: 16,
               created_at: "2017-11-22T12:36:03.389Z",
             }
           );
