@@ -12,8 +12,8 @@ exports.testArticlesGet = () => {
         .get('/api/articles')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles[0]).to.contain.keys(
+          expect(body.articles.articles).to.be.an('array');
+          expect(body.articles.articles[0]).to.contain.keys(
             'author',
             'title',
             'article_id',
@@ -45,8 +45,8 @@ exports.testArticlesGet = () => {
         .get('/api/articles')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles).to.be.descendingBy("created_at")
+          expect(body.articles.articles).to.be.an('array');
+          expect(body.articles.articles).to.be.descendingBy("created_at")
         });
     });
     it('GET status:200, and return an array of articles with input order', () => {
@@ -54,8 +54,8 @@ exports.testArticlesGet = () => {
         .get('/api/articles?sort_by=votes&order=asc')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles).to.be.ascendingBy("votes")
+          expect(body.articles.articles).to.be.an('array');
+          expect(body.articles.articles).to.be.ascendingBy("votes")
         });
     });
     it("GET for sort_by a column that doesn't exist - status:400 and error message", () => {
@@ -79,8 +79,8 @@ exports.testArticlesGet = () => {
         .get('/api/articles?author=butter_bridge')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles).to.eql(
+          expect(body.articles.articles).to.be.an('array');
+          expect(body.articles.articles).to.eql(
             [{
               article_id: 1,
               title: 'Living in the shadow of a great man',
@@ -119,8 +119,8 @@ exports.testArticlesGet = () => {
         .get('/api/articles?topic=cats')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.an('array');
-          expect(body.articles).to.eql(
+          expect(body.articles.articles).to.be.an('array');
+          expect(body.articles.articles).to.eql(
             [{
               article_id: 5,
               title: 'UNCOVERED: catspiracy to bring down democracy',
@@ -155,7 +155,7 @@ exports.testArticlesGet = () => {
         .get('/api/articles?author=lurker')
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.eql([]);
+          expect(body.articles.articles).to.eql([]);
         });
     });
   });

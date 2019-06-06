@@ -18,8 +18,9 @@ exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc', author,
     .offset(offset)
     .orderBy(sort_by, order)
     .then(articles => articles.map(article => {
-      article.comment_count = +article.comment_count;
-      return article
+      const { comment_count, ...rest } = article
+      const count = +comment_count;
+      return { ...rest, comment_count: count }
     }));
   const total_count = await connection
     .select('*')
