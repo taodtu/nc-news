@@ -57,10 +57,10 @@ describe('/articles', () => {
         .get('/api/articles/1/comments')
         .expect(200)
         .then(({ body }) => {
+          console.log(body)
           expect(body.comments).to.be.an('array');
           expect(body.comments[0]).to.contain.keys(
             'comment_id',
-            'article_id',
             'author',
             'body',
             'created_at',
