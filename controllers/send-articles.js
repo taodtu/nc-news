@@ -8,6 +8,7 @@ exports.sendArticles = async (req, res, next) => {
   } else res.status(200).send({ articles });
 
  } catch (err) {
+  console.log(err)
   next(err)
  }
 }
