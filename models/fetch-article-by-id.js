@@ -8,8 +8,9 @@ exports.fetchArticleByID = async ({ article_id }) => {
   .leftJoin('comments', 'comments.article_id', '=', 'articles.article_id')
   .groupBy('articles.article_id')
   .returning('*').then(articles => articles.map(article => {
-   article.comment_count = +article.comment_count;
-   return article
+   const { comment_count, ...rest } = article
+   const count = +comment_count;
+   return { ...rest, comment_count: count }
   }));;
  return rows[0];
 };

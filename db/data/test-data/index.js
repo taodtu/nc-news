@@ -1,10 +1,10 @@
 exports.commentData = require('./comments').map(comment => {
- comment['created_at'] = new Date(comment['created_at']);
- return comment;
+ const { created_at, ...rest } = comment
+ return { ...rest, created_at: new Date(comment['created_at']) }
 });;
 exports.articleData = require('./articles').map(article => {
- article['created_at'] = new Date(article['created_at']);
- return article;
+ const { created_at, ...rest } = article
+ return { ...rest, created_at: new Date(article['created_at']) }
 });
 exports.topicData = require('./topics');
 exports.userData = require('./users');
