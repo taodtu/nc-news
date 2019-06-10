@@ -1,0 +1,5 @@
+{
+ "GET /api/topics": "get all the topics",
+ "GET /api/users/:username": "get the user by username",
+ "GET /api/articles/:article_id": "get the article by its ID"
+}

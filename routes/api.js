@@ -4,11 +4,15 @@ const topicsRouter = require('./topic-router');
 const usersRouter = require('./user-router');
 const articlesRouter = require('./article-router');
 const commentsRouter = require('./comment-router')
-const { apiDescription } = require('../api-des')
+const fs = require('fs');
 
 apiRouter
   .route('/')
-  .get((req, res) => res.send({ ok: true, api: apiDescription.apiDescription }))
+  .get((req, res, next) => {
+    fs.readFile('./api.json', 'utf8', (err, api) => {
+      res.status(200).send({ api: JSON.parse(api) });
+    })
+  })
   .all(methodNotAllowed);
 
 apiRouter.use('/topics', topicsRouter);
