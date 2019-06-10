@@ -6,6 +6,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/', (req, res, next) => {
+ res.status(200).send({ msg: "welcome to the nc-news website, please explore by going to /api route" });
+});
+
 app.use('/api', apiRouter);
 
 app.use(handlePsqlErrors)
