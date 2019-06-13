@@ -1,6 +1,8 @@
 {
- "msg": "welcome to my nc-news api!",
+ "msg": "welcome to my nc-news api!, below is the avaible endpoint for this resource",
  "GET /api/topics": "get all the topics",
  "GET /api/users/:username": "get the user by username",
- "GET /api/articles/:article_id": "get the article by its ID"
+ "GET /api/articles/:article_id": "get the article by its ID",
+ "PATCH /api/articles/:article_id": "update the votes of the article",
+ "POST /api/articles/:article_id/comments": "Post a comment to the article by ID"
 }
