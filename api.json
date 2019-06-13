@@ -4,5 +4,10 @@
  "GET /api/users/:username": "get the user by username",
  "GET /api/articles/:article_id": "get the article by its ID",
  "PATCH /api/articles/:article_id": "update the votes of the article",
- "POST /api/articles/:article_id/comments": "Post a comment to the article by ID"
+ "POST /api/articles/:article_id/comments": "Post a comment to the article by ID",
+ "GET /api/articles/:article_id/comments": "get all comments to a article by article-ID",
+ "GET /api/articles": "get all articles in this resource",
+ "PATCH /api/comments/:comment_id": "update the votes to a comment by its ID",
+ "DELETE /api/comments/:comment_id": "delete a comment by its ID",
+ "GET /api": "get the api endpoint instruction"
 }
