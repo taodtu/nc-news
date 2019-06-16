@@ -1,4 +1,4 @@
-const { insertCommentToArticle } = require('../models/inser-comment-article');
+const { insertCommentToArticle } = require('../models/insert-comment-article');
 const { checkExist } = require('../models/fetch-articles');
 exports.postCommentToArticle = async (req, res, next) => {
  try {
