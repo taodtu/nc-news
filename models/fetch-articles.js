@@ -1,6 +1,6 @@
 const connection = require("../db/connection");
 
-exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc', author, topic, limit = 10, p }) => {
+exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc', author, topic, limit = null, p }) => {
   const offset = limit * (p - 1);
   if (!['asc', 'desc'].includes(order)) return await Promise.reject({ status: 400, msg: 'Wrong Order Query' });
 
