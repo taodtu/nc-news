@@ -23,8 +23,13 @@ exports.fetchArticles = async ({ sort_by = 'created_at', order = 'desc', author,
       return { ...rest, comment_count: count }
     }));
   const total_count = await connection
-    .select('*')
+    .select('articles.*')
     .from('articles')
+    .modify(query => {
+      if (author) query.where({ "articles.author": author });
+      else if (topic) query.where({ "articles.topic": topic })
+    })
+    .returning('*')
 
   return { articles, total_count: total_count.length }
 }
