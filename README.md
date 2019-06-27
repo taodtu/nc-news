@@ -1,6 +1,6 @@
-# A Express + Knex + PSQL Northcoders-News Sever
+# An Express + Knex + PSQL Northcoders-News Sever
 
-The client App is hosted on [here](https://tao-nc-news-rest-client.netlify.com/) and the client app code is hosted on [Github](https://github.com/taodtu/nc-news-rest-client/tree/master/nc-news-rest-client)
+The client App is hosted on [here](https://tao-nc-news-rest-client.netlify.com/) and the client app source code is hosted on [Github](https://github.com/taodtu/nc-news-rest-client/tree/master/nc-news-rest-client)
 
 Northcoders News is a social news aggregation, web content rating, and discussion website. Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and remove any comments which they have added.
 
