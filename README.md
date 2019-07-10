@@ -1,10 +1,12 @@
 # An Express + Knex + PSQL Northcoders-News Sever
 
-The client App is hosted on [https://tao-nc-news-rest-client.netlify.com/](https://tao-nc-news-rest-client.netlify.com/) and the client app source code is hosted on [https://github.com/taodtu/nc-news-rest-client](https://github.com/taodtu/nc-news-rest-client)
+The client App is hosted on [cick here](https://tao-nc-news-rest-client.netlify.com/) and the client app source code is hosted on [click here](https://github.com/taodtu/nc-news-rest-client).
+
+If you want to know more about me, here is my [portforlio web](https://tao-profile.netlify.com/).
 
 Northcoders News is a social news aggregation, web content rating, and discussion website. Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and remove any comments which they have added.
 
-This app builds the server with raw data from Northcoders using express, and stores data with PSQL.You can consume the built API via [https://nc-news-rest-api.herokuapp.com/](https://nc-news-rest-api.herokuapp.com/), the endpoint can be consumed as below:
+This app builds the server with raw data from Northcoders using express, and stores data with PSQL.You can consume the built API via [click here](https://nc-news-rest-api.herokuapp.com/), the endpoint can be consumed as below:
 "GET /api/topics": "get all the topics",
 "GET /api/users/:username": "get the user by username",
 "GET /api/articles/:article_id": "get the article by its ID",
